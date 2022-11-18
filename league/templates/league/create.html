@@ -1,0 +1,9 @@
+<form method="post">
+    {% csrf_token %}
+
+    <input type="text" name="name" placeholder="Name" required minlength="3" maxlength="30">
+    TV vs Movie?
+    Scoring?
+    <button type="submit">Submit</button>
+
+</form>

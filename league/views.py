@@ -3,8 +3,12 @@ from django.http import HttpResponse
 from .models import League
 
 def index(request):
-    number_of_leauges = League.objects.count()
-    return HttpResponse(f'There are {number_of_leauges} leagues')
+    context = { "number_of_leauges": League.objects.count()   }
+    return render(request,'league/index.html', context)
+
+def create(request):
+    return render(request,'league/create.html')
+
 
 def details(request, league_id):
     current_league =get_object_or_404(League, pk=league_id)
