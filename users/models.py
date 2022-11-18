@@ -7,6 +7,8 @@ class Player(AbstractUser):
     nickname = models.CharField(max_length = 150, blank = True, null = True, unique = False)
     groups = None
     user_permissions = None
+    
+    # todo, password is kinda wonky in django admin
 
 
     class Meta:
