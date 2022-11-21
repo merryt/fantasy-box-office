@@ -23,7 +23,11 @@ def create(request):
 
 
 def details(request, league_id):
-    current_league =get_object_or_404(League, pk=league_id)
-    print(current_league)
-    return HttpResponse(f'you are looking at leauge: {current_league.name}')
-
+    current_league = get_object_or_404(League, pk=league_id)
+    if request.method == 'POST':
+        # add user to this leauge. 
+        print(current_league)
+        return redirect('leagues')  
+    
+    context = { "current_league" : current_league}
+    return render(request, 'league/details.html', context)
