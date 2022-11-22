@@ -1,5 +1,17 @@
-you are looking at league: {{ current_league }}
+<h1>you are looking at league: {{ current_league }}</h1>
 
+{% if current_league.players.all %}
+<br>
+players in this leauge
+<ul>
+    {% for player in current_league.players.all %}
+    <li><a href="/u/{{ player.id }}/">{{ player.username }}</a></li>
+    {% endfor %}
+</ul>
+
+{% else %}
+<p>No one is in this leauge</p>
+{% endif %}
 <form method="post">
     {% csrf_token %}
     <button type="submit">Join</button>
