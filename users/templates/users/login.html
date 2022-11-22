@@ -1,1 +1,16 @@
-test
+<html>
+
+<form method="post">
+    login here
+    {% csrf_token %}
+
+    <input type="text" name="username" placeholder="Username" required minlength="3" maxlength="30">
+    <small>{{error}}</small>
+    <input type="password" name="password" placeholder="Password" required minlength="8" maxlength="32">
+    <small>{{paswword_error}}</small>
+
+    <button type="submit">Submit</button>
+
+</form>
+
+</html>

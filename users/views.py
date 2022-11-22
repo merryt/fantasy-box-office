@@ -22,8 +22,8 @@ def register(request):
     
     return render(request,'users/register.html')
 
-def login(requst):
-    return HttpResponse(f'login')
+def login(request):
+    return render(request,'users/login.html')
 
 def logout(request):
     auth_logout(request) 
