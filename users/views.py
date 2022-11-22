@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Player
 from django.http import HttpResponse 
+from django.contrib.auth import logout as auth_logout
 
 def register(request):
     if request.method == 'POST':
@@ -23,6 +24,10 @@ def register(request):
 
 def login(requst):
     return HttpResponse(f'login')
+
+def logout(request):
+    auth_logout(request) 
+    return redirect('/login') 
 
 def profile(requst, player_id):
     return HttpResponse(f'looking up player {player_id}')
