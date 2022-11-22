@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Player
 from django.http import HttpResponse 
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import authenticate
 
 def register(request):
     if request.method == 'POST':
@@ -23,6 +25,19 @@ def register(request):
     return render(request,'users/register.html')
 
 def login(request):
+    
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        print(user)
+        if user is not None:
+            auth_login(request, user)
+            return redirect('/l')
+        else:
+            error = "bad username or password"
+            return render(request,'users/login.html',{'error':error})
+
     return render(request,'users/login.html')
 
 def logout(request):
