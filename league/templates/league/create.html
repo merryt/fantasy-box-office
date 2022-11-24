@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block mymessage %}
 <form method="post">
     {% csrf_token %}
 
@@ -7,3 +10,5 @@
     <button type="submit">Submit</button>
 
 </form>
+
+{% endblock %}

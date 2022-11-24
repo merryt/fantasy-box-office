@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block mymessage %}
 <h1>you are looking at league: {{ current_league }}</h1>
 
 {% if current_league.players.all %}
@@ -16,3 +19,4 @@ players in this leauge
     {% csrf_token %}
     <button type="submit">Join</button>
 </form>
+{% endblock %}
