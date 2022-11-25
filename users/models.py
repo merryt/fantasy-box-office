@@ -1,15 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.contrib.auth.models import User
 
-class Player(AbstractUser):
-    username = models.CharField(max_length = 50, blank = True, null = True, unique = True)
-    nickname = models.CharField(max_length = 150, blank = True, null = True, unique = False)
-    groups = None
-    user_permissions = None
-    
-    # todo, password is kinda wonky in django admin
+from django.shortcuts import get_object_or_404
 
+class Player(models.Model):
+    auth_user_link = models.OneToOneField(User, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Player"
@@ -17,8 +14,8 @@ class Player(AbstractUser):
 
 
     def __str__(self):
-        return self.username
-    
+        auth_user = get_object_or_404(User, pk=self.auth_user_link.id)
+        return auth_user.username
     
     
     

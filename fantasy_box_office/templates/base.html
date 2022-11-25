@@ -5,12 +5,30 @@
         html {
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            align-items: center;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            margin: 10px;
+        }
     </style>
 </head>
 
 <body>
     <header>
-        <a class="logo" href="#">show time</a>
+        <a class="logo" href="/l/">show time</a>
         <nav>
             <a href="/l/">All leauges</a> |
             <!-- if user is not logged in hide the following 3 links and replace them with login -->
