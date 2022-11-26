@@ -11,7 +11,7 @@ load_dotenv()
 
 
 
-def get_movies(current_page = 0, number_of_movies_checked = 0):
+def get_movies(current_page = 0):
     today = datetime.date.today() 
     one_year_from_today = f'{datetime.date.today().year + 1}-{datetime.date.today().month}-{datetime.date.today().day}'
     
@@ -45,7 +45,7 @@ def get_movies(current_page = 0, number_of_movies_checked = 0):
     
     
     if (len(results)== 0):
-        return number_of_movies_checked
+        return current_page
     else:    
         for movie in results:
             release_date_arr = [int(x) for x in movie["release_date"].split("-")]                    
@@ -63,8 +63,7 @@ def get_movies(current_page = 0, number_of_movies_checked = 0):
                         "release_date": release_date_fmt,    
                         }                 
             )
-        get_movies(current_page + 1, number_of_movies_checked + 20)
-    return number_of_movies_checked
+        return get_movies(current_page + 1)
 
 class Command(BaseCommand):
     help = 'Use this command to get all the upcoming movies'
@@ -72,9 +71,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
     
-        number_of_movies_checked = get_movies()
+        pages_of_movies_pulled = get_movies()
         
-        self.stdout.write(self.style.SUCCESS(f'no errors is probably a good thing, we pulled {number_of_movies_checked} movies from TMDB'))
+        self.stdout.write(self.style.SUCCESS(f'no errors is probably a good thing, we pulled {pages_of_movies_pulled} pages of movies from TMDB... so like {pages_of_movies_pulled*20} or so'))
         pass
     
     
