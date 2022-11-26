@@ -29,6 +29,7 @@ def create(request):
 def details(request, league_id):    
     current_league = get_object_or_404(League, pk=league_id)
 
+
     if request.method == 'POST':
         if not request.user.is_authenticated:
             return redirect('login')
@@ -43,5 +44,8 @@ def details(request, league_id):
 
             return redirect(f'/l/{league_id}')  
 
-    context = { "current_league" : current_league}
+    context = { 
+               "current_league" : current_league, 
+               "is_active_user_in_leauge": current_league.players.filter(id=request.user.id).exists()
+               }
     return render(request, 'league/details.html', context)
