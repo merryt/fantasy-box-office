@@ -7,9 +7,9 @@ class Movie(models.Model):
     overview = models.TextField()
     original_title = models.CharField(max_length=256)
     original_language = models.CharField(max_length=32)
-    backdrop_path = models.CharField(max_length=256)
-    popularity = models.FloatField()
-    poster_path = models.CharField(max_length=256)
+    backdrop_path = models.CharField(max_length=256, blank=True, default=None, null=True,)
+    popularity = models.FloatField(blank=True, default=None)
+    poster_path = models.CharField(max_length=256,blank=True, default=None, null=True,)
     release_date = models.DateField()
     id = models.PositiveIntegerField(primary_key=True)
     

@@ -10,39 +10,49 @@ import re
 load_dotenv()
 
 
-class Command(BaseCommand):
-    help = 'Use this command to get all the upcoming movies'
 
-    def handle(self, *args, **options):
-        
-        url = f'https://api.themoviedb.org/3/movie/upcoming?api_key={os.environ["TMDB_KEY"]}'
-        
-        try:
-            response = requests.request("GET", url)
-            response.raise_for_status()
-        except requests.exceptions.HTTPError as errh:
-            return "An Http Error occurred:" + repr(errh)
-        except requests.exceptions.ConnectionError as errc:
-            return "An Error Connecting to the API occurred:" + repr(errc)
-        except requests.exceptions.Timeout as errt:
-            return "A Timeout Error occurred:" + repr(errt)
-        except requests.exceptions.RequestException as err:
-            return "An Unknown Error occurred" + repr(err)
-        
-        
-        
+def get_movies(current_page = 0, number_of_movies_checked = 0):
+    today = datetime.date.today() 
+    one_year_from_today = f'{datetime.date.today().year + 1}-{datetime.date.today().month}-{datetime.date.today().day}'
+    
+    
+    #this is currently set to only run for the US region
+    
+    if(current_page == 0 ):
+        url = f'https://api.themoviedb.org/3/discover/movie?api_key={os.environ["TMDB_KEY"]}&language=en-US&sort_by=release_date.asc&primary_release_date.gte={today}&primary_release_date.lte={one_year_from_today}&region=US'
+    else:
+        url = f'https://api.themoviedb.org/3/discover/movie?api_key={os.environ["TMDB_KEY"]}&language=en-US&sort_by=release_date.asc&primary_release_date.gte={today}&primary_release_date.lte={one_year_from_today}&region=US&page={current_page}'
+   
+    # url = f'https://api.themoviedb.org/3/movie/upcoming?api_key={os.environ["TMDB_KEY"]}'
+    
+    try:
+        response = requests.request("GET", url)
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as errh:
+        return "An Http Error occurred:" + repr(errh)
+    except requests.exceptions.ConnectionError as errc:
+        return "An Error Connecting to the API occurred:" + repr(errc)
+    except requests.exceptions.Timeout as errt:
+        return "A Timeout Error occurred:" + repr(errt)
+    except requests.exceptions.RequestException as err:
+        return "An Unknown Error occurred" + repr(err)
+    
+    
+    try: 
         results = json.loads(response.text)["results"]
-        
-        
-        
-        if (len(results)== 0):
-            self.stdout.write(self.style.ERROR(f'SHOOT, NO MOVIES FROM TMDB'))
+    except:
+        return "An error occurred getting the movie results form the api call"
+    
+    
+    if (len(results)== 0):
+        return number_of_movies_checked
+    else:    
         for movie in results:
             release_date_arr = [int(x) for x in movie["release_date"].split("-")]                    
             release_date_fmt = datetime.date(*release_date_arr)
             Movie.objects.update_or_create(
-                     id=movie["id"],
-                     defaults = {
+                        id=movie["id"],
+                        defaults = {
                         "backdrop_path": movie["backdrop_path"],
                         "original_title": movie["original_title"],
                         "title": movie["title"],
@@ -51,10 +61,20 @@ class Command(BaseCommand):
                         "popularity": movie["popularity"],                     
                         "poster_path": movie["poster_path"],                     
                         "release_date": release_date_fmt,    
-                     }                 
+                        }                 
             )
+        get_movies(current_page + 1, number_of_movies_checked + 20)
+    return number_of_movies_checked
 
-        self.stdout.write(self.style.SUCCESS(f'no errors is probably a good thing, we pulled {len(results)} movies from TMDB'))
+class Command(BaseCommand):
+    help = 'Use this command to get all the upcoming movies'
+
+
+    def handle(self, *args, **options):
+    
+        number_of_movies_checked = get_movies()
+        
+        self.stdout.write(self.style.SUCCESS(f'no errors is probably a good thing, we pulled {number_of_movies_checked} movies from TMDB'))
         pass
     
     
