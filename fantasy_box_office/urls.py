@@ -20,6 +20,7 @@ from users.views import register, login, logout
 urlpatterns = [
     path("l/", include('league.urls')),
     path("u/", include('users.urls')),
+    path("movies/", include('movies.urls')),
     path("register/", register, name='register' ),
     path("login/", login, name='login' ),
     path("logout/", logout, name='logout'),

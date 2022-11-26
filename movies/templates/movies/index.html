@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Upcoming movies</h2>
+
+{% if upcoming_movies %}
+<ul>
+    {% for movie in upcoming_movies %}
+    <li>{{ movie.title }} - {{movie.release_date}}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No upcoming movies, either apocolypse is happening or there is a server error</p>
+{% endif %}
+
+
+{% endblock %}
