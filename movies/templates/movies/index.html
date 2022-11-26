@@ -7,7 +7,7 @@
 {% if upcoming_movies %}
 <ul>
     {% for movie in upcoming_movies %}
-    <li>{{ movie.title }} - {{movie.release_date}}</li>
+    <li><a href="/movies/{{movie.id}}">{{ movie.title }}</a> - {{movie.release_date}}</li>
     {% endfor %}
 </ul>
 {% else %}
