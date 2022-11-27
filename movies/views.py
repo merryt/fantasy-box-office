@@ -3,7 +3,7 @@ from .models import Movie
 
 def details(request, movie_id):
     current_movie = get_object_or_404(Movie, pk=movie_id)
-    context = { "current_movie" : current_movie, }
+    context = { "movie" : current_movie, }
     return render(request, 'movies/details.html', context)
 
 def index(request):
