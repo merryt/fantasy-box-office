@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{team.team_name}}
+
+{% if team.movie_picks.all %}
+<ul>
+    {% for movie in team.movie_picks.all %}
+    <li>{{movie.title}}</li>
+    {% endfor %}
+</ul>
+{% else %}
+You don't seem to have any movie picks
+{% endif%}
+
+{% endblock %}

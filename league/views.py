@@ -51,3 +51,12 @@ def details(request, league_id):
                "is_active_user_in_leauge": current_teams.filter(player = request.user.id).exists()
                }
     return render(request, 'league/details.html', context)
+
+
+def team_detail(request, league_id, team_id):
+    team = Team.objects.get(pk=team_id)
+    print(team)
+    context = {
+        "team": team,
+    }
+    return render(request, 'league/team.html', context)
