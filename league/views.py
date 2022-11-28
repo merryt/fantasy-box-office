@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse 
-from .models import League
+from .models import League, Team
 from users.models import Player
 from django.contrib.auth.decorators import login_required
 
@@ -28,24 +28,26 @@ def create(request):
 
 def details(request, league_id):    
     current_league = get_object_or_404(League, pk=league_id)
-
-
     if request.method == 'POST':
         if not request.user.is_authenticated:
             return redirect('login')
         
         if 'league_leave' in request.POST:
+            Team.objects.filter(league=current_league).filter(player = request.user.id).delete()
             current_league.teams.remove(request.user.id)
             return redirect(f'/l/{league_id}')  
         
         elif 'league_join' in request.POST:
-            current_league.teams.add(request.user.id)
-            current_league.save()
+            team_name = request.POST["team_name"]
+            team = Team.objects.create(team_name=team_name, player=Player.objects.get(auth_user_link=request.user.id), league=current_league)
+            team.save()            
 
             return redirect(f'/l/{league_id}')  
 
+    current_teams = Team.objects.filter(league=current_league)
     context = { 
                "current_league" : current_league, 
-               "is_active_user_in_leauge": current_league.teams.filter(id=request.user.id).exists()
+               "teams": current_teams,
+               "is_active_user_in_leauge": current_teams.filter(player = request.user.id).exists()
                }
     return render(request, 'league/details.html', context)

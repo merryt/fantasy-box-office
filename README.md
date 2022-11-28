@@ -2,6 +2,7 @@
 
 todo:
 
+- add team pages
 - build draft mechanic (perhaps this will require some realtime stuff)
 - get box office data
 - build browser for upcoming movers (list page?)

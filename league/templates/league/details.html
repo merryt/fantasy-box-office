@@ -8,18 +8,19 @@
     <button type="submit" name="league_leave" value="Leave">Leave</button>
     {% else %}
     <button type="submit" name="league_join" value="Join">Join</button>
+    <input type="text" name="team_name" placeholder="Team Name" required minlength="3" maxlength="30">
     {% endif %}
 
 </form>
 
 
 
-{% if current_league.teams.all %}
+{% if teams.all %}
 <br>
 players in this leauge
 <ul>
-    {% for team in current_league.teams.all %}
-    <li><a href="/u/{{ team.player.id }}/">{{ team.player.name }}</a></li>
+    {% for team in teams.all %}
+    <li><a href="/l/{{current_league.id}}/t/{{ team.id }}/">{{ team.team_name }}</a></li>
     {% endfor %}
 </ul>
 
