@@ -14,12 +14,12 @@
 
 
 
-{% if current_league.players.all %}
+{% if current_league.teams.all %}
 <br>
 players in this leauge
 <ul>
-    {% for player in current_league.players.all %}
-    <li><a href="/u/{{ player.id }}/">{{ player }}</a></li>
+    {% for team in current_league.teams.all %}
+    <li><a href="/u/{{ team.player.id }}/">{{ team.player.name }}</a></li>
     {% endfor %}
 </ul>
 

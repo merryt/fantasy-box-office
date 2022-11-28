@@ -35,17 +35,17 @@ def details(request, league_id):
             return redirect('login')
         
         if 'league_leave' in request.POST:
-            current_league.players.remove(request.user.id)
+            current_league.teams.remove(request.user.id)
             return redirect(f'/l/{league_id}')  
         
         elif 'league_join' in request.POST:
-            current_league.players.add(request.user.id)
+            current_league.teams.add(request.user.id)
             current_league.save()
 
             return redirect(f'/l/{league_id}')  
 
     context = { 
                "current_league" : current_league, 
-               "is_active_user_in_leauge": current_league.players.filter(id=request.user.id).exists()
+               "is_active_user_in_leauge": current_league.teams.filter(id=request.user.id).exists()
                }
     return render(request, 'league/details.html', context)
