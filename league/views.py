@@ -63,7 +63,6 @@ def team_detail(request, league_id, team_id):
 
 def my_leagues(request):
     myteams = Team.objects.filter(player=request.user.id)
-    print(myteams)
     context = {
         "teams": myteams,
     }

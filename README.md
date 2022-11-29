@@ -2,9 +2,13 @@
 
 todo:
 
-- add ability to draft movie from all movies
+- movie details fixes
+  - add ability to add a movie if you are in more then one leauge
+- figure out if movie is already on a team, if so, don't show "add to leauge button"
 - build draft mechanic (perhaps this will require some realtime stuff)
+
   - https://blog.heroku.com/in_deep_with_django_channels_the_future_of_real_time_apps_in_django
+
 - get box office data
 - build browser for upcoming movers (list page?)
 - ability to associate users to movies within the context of a league

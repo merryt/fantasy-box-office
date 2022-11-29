@@ -4,4 +4,13 @@
 <h1>{{ movie.original_title }}</h1>
 <p>{{movie.overview}}</p>
 {{movie.release_date}}
+<form method="post">
+    {% csrf_token %}
+    {% if not only_one_team %}
+    <!-- todo: build "select for team" logic -->
+    dropdown
+    {% endif %}
+    <button type="submit">Add to leauge</button>
+
+</form>
 {% endblock%}
