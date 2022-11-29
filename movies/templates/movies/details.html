@@ -1,16 +1,19 @@
-{% extends 'base.html'%}
-
+{% extends "base.html" %}
 {% block content %}
-<h1>{{ movie.original_title }}</h1>
-<p>{{movie.overview}}</p>
-{{movie.release_date}}
-<form method="post">
+  <h1>{{ movie.original_title }}</h1>
+  <p>{{ movie.overview }}</p>
+  {{ movie.release_date }}
+  <form method="post">
     {% csrf_token %}
     {% if not only_one_team %}
-    <!-- todo: build "select for team" logic -->
-    dropdown
+      <!-- todo: build "select for team" logic -->
+      <a href="#">TODO: Add this movie to one of your leagues</a>
+    {% else %}
+      {% if is_movie_on_team %}
+        <button type="submit" name="remove_movie">Remove</button>
+      {% else %}
+        <button type="submit" name="add_movie">Add</button>
+      {% endif %}
     {% endif %}
-    <button type="submit">Add to leauge</button>
-
-</form>
-{% endblock%}
+  </form>
+{% endblock content %}
