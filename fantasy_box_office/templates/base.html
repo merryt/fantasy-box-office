@@ -30,10 +30,9 @@
     <header>
         <a class="logo" href="/l/">show time</a>
         <nav>
-            <a href="/l/">All leauges</a> |
-            <!-- if user is not logged in hide the following 3 links and replace them with login -->
+            <a href="/l/">All leagues</a> |
             {% if user.is_authenticated %}
-            <a href="#">Your leagues</a> |
+            <a href="/myleagues/">Your leagues</a> |
             <a href="#">Profile</a> |
             <a href="/logout/">Logout</a>
             {% else %}

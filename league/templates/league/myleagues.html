@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>List of your teams</h1>
+
+{% if teams.all %}
+
+{% for team in teams.all %}
+<a href="/l/{{team.league.id}}/t/{{team.id}}">{{team}}</a> <br />
+{% endfor %}
+{% else %}
+no teams?
+{% endif %}
+
+{% endblock%}

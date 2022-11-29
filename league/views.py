@@ -60,3 +60,11 @@ def team_detail(request, league_id, team_id):
         "team": team,
     }
     return render(request, 'league/team.html', context)
+
+def my_leagues(request):
+    myteams = Team.objects.filter(player=request.user.id)
+    print(myteams)
+    context = {
+        "teams": myteams,
+    }
+    return render(request, 'league/myleagues.html', context)
