@@ -1,20 +1,17 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block content %}
-There are {{number_of_leagues}} leagues
-<a href="/l/create">Create a new league</a>
-
-
-{% if list_of_leagues %}
-<ul>
-    {% for league in list_of_leagues %}
-    <li><a href="/l/{{ league.id }}/">{{ league.name }}</a></li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No leages are available... perhaps a server errors</p>
-{% endif %}
-
-
-<a href="{% url 'logout' %}">Log Out</a>
-{% endblock %}
+    There are {{ number_of_leagues }} leagues
+    <a href="{% url 'league_create' %}">Create a new league</a>
+    {% if list_of_leagues %}
+        <ul>
+            {% for league in list_of_leagues %}
+                <li>
+                    <a href="{% url'league_details' league.id %}">{{ league.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No leages are available... perhaps a server errors</p>
+    {% endif %}
+    <a href="{% url 'logout' %}">Log Out</a>
+{% endblock content %}

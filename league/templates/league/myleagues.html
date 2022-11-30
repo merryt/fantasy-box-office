@@ -1,16 +1,12 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block content %}
-
-<h1>List of your teams</h1>
-
-{% if teams.all %}
-
-{% for team in teams.all %}
-<a href="/l/{{team.league.id}}/t/{{team.id}}">{{team}}</a> <br />
-{% endfor %}
-{% else %}
-no teams?
-{% endif %}
-
-{% endblock%}
+    <h1>List of your teams</h1>
+    {% if teams.all %}
+        {% for team in teams.all %}
+            <a href="{% url 'team_details' team.league.id team.id %}">{{ team }}</a>
+            <br />
+        {% endfor %}
+    {% else %}
+        no teams?
+    {% endif %}
+{% endblock content %}

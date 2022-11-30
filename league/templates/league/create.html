@@ -1,14 +1,15 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-
-    <input type="text" name="name" placeholder="Name" required minlength="3" maxlength="30">
-    TV vs Movie?
-    Scoring?
-    <button type="submit">Submit</button>
-
-</form>
-
-{% endblock %}
+    <form method="post">
+        {% csrf_token %}
+        <input type="text"
+               name="name"
+               placeholder="Name"
+               required
+               minlength="3"
+               maxlength="30"/>
+        TV vs Movie?
+        Scoring?
+        <button type="submit">Submit</button>
+    </form>
+{% endblock content %}
