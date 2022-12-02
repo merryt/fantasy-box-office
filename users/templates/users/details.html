@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if player.id == request.user.id %}this is you!{% endif %}
+    {{ player }}
+    ---
+    {{ player.auth_user_link }}*{{ request.user.id }}
+{% endblock content %}
