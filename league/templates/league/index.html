@@ -6,7 +6,7 @@
         <ul>
             {% for league in list_of_leagues %}
                 <li>
-                    <a href="{% url'league_details' league.id %}">{{ league.name }}</a>
+                    <a href="{% url 'league_details' league.id %}">{{ league.name }}</a>
                 </li>
             {% endfor %}
         </ul>
