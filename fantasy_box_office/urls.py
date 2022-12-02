@@ -17,10 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from users.views import register, login, logout
 from league.views import my_leagues
+from movies.views import rules
 
 urlpatterns = [
     path("l/", include('league.urls')),
     path("u/", include('users.urls')),
+    path("rules/", rules, name="rules"),
     path('myleagues/', my_leagues, name='my_leagues'),
     path("movies/", include('movies.urls')),
     path("register/", register, name='register' ),
