@@ -13,7 +13,7 @@ load_dotenv()
 
 def get_movies(current_page = 0):
     today = datetime.date.today() 
-    one_year_from_today = f'{datetime.date.today().year + 1}-{datetime.date.today().month}-{datetime.date.today().day}'
+    one_year_from_today = f'{datetime.date.today().year + 1}-{datetime.date.today().month}-{datetime.date.today().strftime("%d")}'
     
     
     #this is currently set to only run for the US region
@@ -36,8 +36,7 @@ def get_movies(current_page = 0):
         return "A Timeout Error occurred:" + repr(errt)
     except requests.exceptions.RequestException as err:
         return "An Unknown Error occurred" + repr(err)
-    
-    
+        
     try: 
         results = json.loads(response.text)["results"]
     except:
@@ -45,6 +44,7 @@ def get_movies(current_page = 0):
     
     
     if (len(results)== 0):
+        print(results)
         return current_page
     else:    
         for movie in results:
