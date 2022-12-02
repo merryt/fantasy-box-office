@@ -3,7 +3,11 @@
     {{ team.team_name }}
     {% if team.movie_picks.all %}
         <ul>
-            {% for movie in team.movie_picks.all %}<li>{{ movie.title }}</li>{% endfor %}
+            {% for movie in team.movie_picks.all %}
+                <li>
+                    <a href="{% url 'movie_detail' movie.id %}">{{ movie.title }}</a>
+                </li>
+            {% endfor %}
         </ul>
     {% else %}
         You don't seem to have any movie picks

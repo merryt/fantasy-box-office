@@ -9,6 +9,7 @@
       <!-- todo: build "select for team" logic -->
       <a href="#">TODO: Add this movie to one of your leagues</a>
     {% else %}
+      {% if picks_error %}<h5 class="error">{{ picks_error }}</h5>{% endif %}
       {% if is_movie_on_team %}
         <button type="submit" name="remove_movie">Remove</button>
       {% else %}
@@ -16,4 +17,9 @@
       {% endif %}
     {% endif %}
   </form>
+  <style>
+    .error{
+      color:red
+    }
+  </style>
 {% endblock content %}
