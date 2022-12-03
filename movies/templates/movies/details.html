@@ -1,6 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
+  <a href="{% url 'movies' %}">Back to all movies</a>
+  {% if movie.backdrop_path %}
+    <img src="https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces{{ movie.backdrop_path }}"
+         width="1920"
+         height="800"
+         class="movie_hero"
+         alt="{{ movie.original_title }} background"/>
+  {% endif %}
   <h1>{{ movie.original_title }}</h1>
+  {% if movie.poster_path %}
+    <img src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2{{ movie.poster_path }}"
+         width="300"
+         height="450"
+         alt="{{ movie.original_title }} poster"/>
+  {% endif %}
   <p>{{ movie.overview }}</p>
   {{ movie.release_date }}
   <form method="post">
@@ -20,6 +34,10 @@
   <style>
     .error{
       color:red
+    }
+    img.movie_hero{
+      width:100%;
+      height:auto;
     }
   </style>
 {% endblock content %}

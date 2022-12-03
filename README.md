@@ -2,8 +2,6 @@
 
 todo:
 
-- user creation feels all kinds of messed up... probably fix that
-
 - movie details fixes
   - add ability to add a movie if you are in more then one leauge
 - build draft mechanic (perhaps this will require some realtime stuff)
