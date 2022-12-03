@@ -19,9 +19,9 @@ def register(request):
             return render(request,'users/register.html',{'error':error,'paswword_error':paswword_error})
         else:
             # does this create a user or just a player? it seeems like it just creates a player
-            auth_user_link = User.objects.create_user(username=username,password=password)
-            auth_user_link.save()
-            player = Player.objects.create(auth_user_link=auth_user_link)
+            user = User.objects.create_user(username=username,password=password)
+            user.save()
+            player = Player.objects.create(auth_user_link=user)
             player.save()
             print(player)
             
@@ -50,7 +50,6 @@ def logout(request):
     return redirect('/login') 
 
 def profile(request, user_id):
-    # This logic is all messed up... a user ID is not a player id... a player id 
     user = User.objects.get(pk=user_id)
     context = {"player": Player.objects.get(auth_user_link=user)}
     return render(request,'users/details.html', context)
