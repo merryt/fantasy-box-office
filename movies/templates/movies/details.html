@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% if error %}
+  {% block error %}
+    {{ error }}
+  {% endblock error %}
+{% endif %}
 {% block content %}
   <a href="{% url 'movies' %}">Back to all movies</a>
   {% if movie.backdrop_path %}

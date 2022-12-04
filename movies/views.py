@@ -3,6 +3,7 @@ from .models import Movie
 from users.models import User
 from league.models import Team
 import datetime
+from django.contrib import messages
 
 
 
@@ -19,8 +20,6 @@ def details(request, movie_id):
     # todo: build "select for team" logic
     context = { "movie" : current_movie, "only_one_team": only_one_team, "is_movie_on_team":is_movie_on_team, "related_teams":related_teams}
     if request.method == 'POST':
-        
-        
         if 'remove_movie' in request.POST:
             team.movie_picks.remove(current_movie)
             team.save()
@@ -35,6 +34,14 @@ def details(request, movie_id):
             context["is_movie_on_team"] = True
         elif 'add_movie_to_team' in request.POST:
             team_id = request.POST['add_movie_to_team']
+            target_team = related_teams.get(id=team_id)
+            if target_team.movie_picks.filter(id=movie_id).count() == 0:
+                target_team.movie_picks.add(current_movie)
+                target_team.save()
+            else:
+                messages.error(request, 'This team already has that movie')
+
+            
             
     return render(request, 'movies/details.html', context)
 
