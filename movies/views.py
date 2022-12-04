@@ -17,8 +17,10 @@ def details(request, movie_id):
         is_movie_on_team = team.movie_picks.filter(id=movie_id).count() >= 1
 
     # todo: build "select for team" logic
-    context = { "movie" : current_movie, "only_one_team": only_one_team, "is_movie_on_team":is_movie_on_team, }
+    context = { "movie" : current_movie, "only_one_team": only_one_team, "is_movie_on_team":is_movie_on_team, "related_teams":related_teams}
     if request.method == 'POST':
+        
+        
         if 'remove_movie' in request.POST:
             team.movie_picks.remove(current_movie)
             team.save()
@@ -31,7 +33,9 @@ def details(request, movie_id):
             team.movie_picks.add(current_movie)
             team.save()
             context["is_movie_on_team"] = True
-    
+        elif 'add_movie_to_team' in request.POST:
+            team_id = request.POST['add_movie_to_team']
+            
     return render(request, 'movies/details.html', context)
 
 def index(request):

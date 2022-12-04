@@ -20,7 +20,10 @@
   <form method="post">
     {% csrf_token %}
     {% if not only_one_team %}
-      <!-- todo: build "select for team" logic -->
+      {% for team in related_teams %}
+        <!-- todo: What if this movie is already on their team for that leauge? -->
+        <button type="submit" name="add_movie_to_team" value="{{ team.id }}">{{ team }}</button>
+      {% endfor %}
       <a href="#">TODO: Add this movie to one of your leagues</a>
     {% else %}
       {% if picks_error %}<h5 class="error">{{ picks_error }}</h5>{% endif %}
