@@ -50,6 +50,8 @@ def get_movies(current_page = 0):
         for movie in results:
             release_date_arr = [int(x) for x in movie["release_date"].split("-")]                    
             release_date_fmt = datetime.date(*release_date_arr)
+            # https://developers.themoviedb.org/3/movies/get-movie-videos
+            # todo: add trailers in https://api.themoviedb.org/3/movie/{movie["id"]}/videos?api_key={os.environ["TMDB_KEY"]}&language=en-US
             Movie.objects.update_or_create(
                         id=movie["id"],
                         defaults = {
