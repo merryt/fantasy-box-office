@@ -25,6 +25,7 @@
   <form method="post">
     {% csrf_token %}
     {% if not only_one_team %}
+      {{ related_teams }}
       {% for team in related_teams %}
         <!-- todo: What if this movie is already on their team for that leauge? -->
         <button type="submit" name="add_movie_to_team" value="{{ team.id }}">{{ team }}</button>

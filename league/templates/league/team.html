@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-    {{ team.team_name }}
+    <h2>{{ team.team_name }}</h2>
+    this team is owned by: {{ team.player }} -
+    <br />
     {% if team.movie_picks.all %}
         <ul>
             {% for movie in team.movie_picks.all %}
                 <li>
                     <a href="{% url 'movie_detail' movie.id %}">{{ movie.title }}</a>
+                    {% if current_player.id == team.player.id %}
+                        <a href="{% url 'remove_movie' movie.id team.id league_id %}">Remove</a>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>

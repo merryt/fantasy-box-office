@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Movie
-from users.models import User
+from users.models import User, Player
 from league.models import Team
 import datetime
 from django.contrib import messages
@@ -9,7 +9,8 @@ from django.contrib import messages
 
 def details(request, movie_id):
     current_movie = get_object_or_404(Movie, pk=movie_id)
-    related_teams = Team.objects.filter(player=request.user.id)
+    current_player = Player.objects.get(auth_user_link=request.user.id)
+    related_teams = Team.objects.filter(player=current_player.id)
     only_one_team = related_teams.count() == 1
     is_movie_on_team = False
     
@@ -52,3 +53,14 @@ def index(request):
 def rules(request):
     context = {}
     return render(request,'movies/rules.html', context)
+
+def remove(request, movie_id, team_id, league_id ):
+    current_player = Player.objects.get(auth_user_link=request.user.id)
+    team = Team.objects.get(id=team_id)
+    if (team.player.id == current_player.id ):
+        current_movie = get_object_or_404(Movie, pk=movie_id)
+        team.movie_picks.remove(current_movie)
+        team.save()
+    
+    
+    return redirect(f'/l/{league_id}/t/{team_id}')

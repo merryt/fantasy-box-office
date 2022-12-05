@@ -54,15 +54,18 @@ def details(request, league_id):
 
 
 def team_detail(request, league_id, team_id):
+    current_player = Player.objects.get(auth_user_link=request.user.id)
     team = Team.objects.get(pk=team_id)
-    print(team)
     context = {
         "team": team,
+        "league_id":league_id, 
+        "current_player": current_player,
     }
     return render(request, 'league/team.html', context)
 
 def my_leagues(request):
-    myteams = Team.objects.filter(player=request.user.id)
+    current_player = Player.objects.get(auth_user_link=request.user.id)
+    myteams = Team.objects.filter(player=current_player.id)
     context = {
         "teams": myteams,
     }
