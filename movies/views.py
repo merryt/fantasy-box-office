@@ -39,12 +39,17 @@ def details(request, movie_id):
             context["is_movie_on_team"] = False
         
         elif 'add_movie' in request.POST:
+            this_league = team.league
+            
             if(team.movie_picks.all().count() > 6):
-                context["picks_error"] = "ooooph, to many picks, remove one to continue"
-                return render(request, 'movies/details.html', context)
-            team.movie_picks.add(current_movie)
-            team.save()
-            context["is_movie_on_team"] = True
+                messages.error(request, 'ooooph, to many picks, remove one to continue')  
+            elif is_movie_in_league(this_league.id, movie_id):
+                messages.error(request, 'someone else already has it')  
+            else :
+                team.movie_picks.add(current_movie)
+                team.save()
+                context["is_movie_on_team"] = True
+                
         elif 'add_movie_to_team' in request.POST:
             team_id = request.POST['add_movie_to_team']
             target_team = related_teams.get(id=team_id)
