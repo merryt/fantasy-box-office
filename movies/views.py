@@ -1,11 +1,23 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Movie
 from users.models import User, Player
-from league.models import Team
+from league.models import Team, League
 import datetime
 from django.contrib import messages
 
 
+def is_movie_in_league(league_id, movie_id):
+    
+    teams_in_league = Team.objects.filter(league=league_id)
+    movies_in_league = []
+    for team in teams_in_league:
+        for movie in team.movie_picks.all():
+            movies_in_league.append(movie.id)
+
+    if movie_id in movies_in_league:
+        return True
+    else:
+        return False
 
 def details(request, movie_id):
     current_movie = get_object_or_404(Movie, pk=movie_id)
@@ -18,7 +30,7 @@ def details(request, movie_id):
         team = related_teams.first()
         is_movie_on_team = team.movie_picks.filter(id=movie_id).count() >= 1
 
-    # todo: build "select for team" logic
+
     context = { "movie" : current_movie, "only_one_team": only_one_team, "is_movie_on_team":is_movie_on_team, "related_teams":related_teams}
     if request.method == 'POST':
         if 'remove_movie' in request.POST:
@@ -36,11 +48,18 @@ def details(request, movie_id):
         elif 'add_movie_to_team' in request.POST:
             team_id = request.POST['add_movie_to_team']
             target_team = related_teams.get(id=team_id)
-            if target_team.movie_picks.filter(id=movie_id).count() == 0:
+            this_league = target_team.league
+            movie_already_in_league = is_movie_in_league(this_league.id, movie_id)
+            movie_already_on_team = (target_team.movie_picks.filter(id=movie_id).count() != 0)
+                      
+            if movie_already_on_team:
+                messages.error(request, 'This team already has that movie')
+            elif movie_already_in_league:
+                messages.error(request, 'someone else already has it')  
+            else:
                 target_team.movie_picks.add(current_movie)
                 target_team.save()
-            else:
-                messages.error(request, 'This team already has that movie')
+                
 
             
             
