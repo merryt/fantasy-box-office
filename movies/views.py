@@ -5,6 +5,7 @@ from league.models import Team, League
 import datetime
 from django.contrib import messages
 
+max_movies = 6
 
 def is_movie_in_league(league_id, movie_id):
     
@@ -41,7 +42,7 @@ def details(request, movie_id):
         elif 'add_movie' in request.POST:
             this_league = team.league
             
-            if(team.movie_picks.all().count() > 6):
+            if(team.movie_picks.all().count() > max_movies):
                 messages.error(request, 'ooooph, to many picks, remove one to continue')  
             elif is_movie_in_league(this_league.id, movie_id):
                 messages.error(request, 'someone else already has it')  
@@ -61,6 +62,8 @@ def details(request, movie_id):
                 messages.error(request, 'This team already has that movie')
             elif movie_already_in_league:
                 messages.error(request, 'someone else already has it')  
+            elif (target_team.movie_picks.all().count() > max_movies):
+                messages.error(request, 'You are already at your max, eventually I will build a way to add this movie and drop anouther, but for now you gotta do that yourself')  
             else:
                 target_team.movie_picks.add(current_movie)
                 target_team.save()
