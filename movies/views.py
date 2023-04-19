@@ -74,7 +74,7 @@ def details(request, movie_id):
     return render(request, 'movies/details.html', context)
 
 def index(request):
-    context = { "upcoming_movies": Movie.objects.filter(release_date__gte=datetime.date.today()).order_by('release_date') }
+    context = { "upcoming_movies": Movie.objects.filter(release_date__gte=datetime.date.today()).order_by('release_date').filter(popularity__gte=1) }
     return render(request,'movies/index.html', context)
 
 def rules(request):

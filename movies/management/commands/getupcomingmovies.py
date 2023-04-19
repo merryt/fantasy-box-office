@@ -12,6 +12,7 @@ load_dotenv()
 
 
 def get_movies(current_page = 0):
+    print("getting a new page of movies")
     today = datetime.date.today() 
     one_year_from_today = f'{datetime.date.today().year + 1}-{datetime.date.today().month}-{datetime.date.today().strftime("%d")}'
     
@@ -19,9 +20,9 @@ def get_movies(current_page = 0):
     #this is currently set to only run for the US region
     
     if(current_page == 0 ):
-        url = f'https://api.themoviedb.org/3/discover/movie?api_key={os.environ["TMDB_KEY"]}&language=en-US&sort_by=release_date.asc&primary_release_date.gte={today}&primary_release_date.lte={one_year_from_today}&region=US'
+        url = f'https://api.themoviedb.org/3/discover/movie?api_key={os.environ["TMDB_KEY"]}&language=en-US&sort_by=release_date.asc&primary_release_date.gte={today}&region=US'
     else:
-        url = f'https://api.themoviedb.org/3/discover/movie?api_key={os.environ["TMDB_KEY"]}&language=en-US&sort_by=release_date.asc&primary_release_date.gte={today}&primary_release_date.lte={one_year_from_today}&region=US&page={current_page}'
+        url = f'https://api.themoviedb.org/3/discover/movie?api_key={os.environ["TMDB_KEY"]}&language=en-US&sort_by=release_date.asc&primary_release_date.gte={today}&region=US&page={current_page}'
    
     # url = f'https://api.themoviedb.org/3/movie/upcoming?api_key={os.environ["TMDB_KEY"]}'
     
